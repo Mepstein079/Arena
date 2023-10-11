@@ -5,12 +5,53 @@ print("Welcome to the Arena!!")
 print("----------------------")
 
 
-start = input("To start type 'S': ")
 xp = 0
 
-while start == 'S':
-    hp = 10
-    monster_hp = 20
+if xp >= 50:
+    player_class = input("Pick your class: Fighter, Juggernaut, Wizard ")
+
+
+def fighter(action):
+    hp = 18
+    base_attack = random.randint(3,6)
+    big_attack = random.randint(5, 8)
+    if action == 1:
+        move = base_attack
+    elif action == 2:
+        move = big_attack
+    return move, hp
+
+
+def wizard(action):
+    hp = 11
+    base_attack = random.randint(6,9)
+    big_attack = random.randint(8,11)
+    even_bigger_attack = random.randint(10,14)
+    if action == 1:
+        return base_attack
+    elif action == 2:
+        return big_attack
+    elif action == 3:
+        return even_bigger_attack
+
+
+def juggernaut():
+    hp = 30
+    base_attack = random.randint(2,3)
+    big_attack = random.randint(3, 5)
+
+    if action == 1:
+        return base_attack
+    elif action == 2:
+        return big_attack
+
+
+start = input("To start type 'S': ")
+player_class = input("Pick your class: Fighter, Juggernaut, Wizard ")
+
+while start < 10:
+
+    if play
 
     while (hp > 0) and (monster_hp > 0):
         action = input("Type A to attack or D to Dodge: ")
@@ -69,13 +110,3 @@ while start == 'S':
 
 
 
-""" def fighter():
-    hp = 15
-    base_attack = random.randint(1,4)
-    big_attack = random.randint(3, 6)
-    if xp >= 50:
-        base_attack += 2
-        big_attack += 2
-        hp += 3
-
-"""
