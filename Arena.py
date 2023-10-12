@@ -1,3 +1,11 @@
+"""To-do list:
+Fix action choices in the while loop
+Re-organize so most code is not in an if statement
+prompt the user inside the class functions
+rearange probabilities so user is rewarded for not only attack
+add mana/energy system to wizard and possibly other classes
+"""
+
 import random
 
 
@@ -6,7 +14,7 @@ print("----------------------")
 
 
 player_class = int(input("To pick your class enter 1, 2, or 3\n"
-                    "1: Figher, 2: wizard, 3: Juggernaut: "))
+                    "1: Figher, 2: Wizard, 3: Juggernaut: "))
 
 
 def fighter():
@@ -14,7 +22,8 @@ def fighter():
     hp_increase = 2
     base_attack = (3, 6)
     big_attack = (5, 8)
-    return hp, hp_increase, base_attack, big_attack
+    base_attack_double = base_attack * 2
+    return hp, hp_increase, base_attack, big_attack, base_attack_double
 
 
 def wizard():
@@ -30,17 +39,19 @@ def juggernaut():
     hp = 30
     hp_increase = 3
     base_attack = (2, 3)
-    return hp, hp_increase, base_attack
+    big_attack = (3,4)
+    heal = (4,5)
+    return hp, hp_increase, base_attack, big_attack, heal
 
 
 if player_class == 1:
-    hp, hp_increase, attack1, attack2 = fighter()
+    hp, hp_increase, action1, action2, action3, user_choice = fighter()
 
 elif player_class == 2:
-    hp, hp_increase, attack1, attack2, attack3 = wizard()
+    hp, hp_increase, action1, action2, action3, user_choice = wizard()
 
 elif player_class == 3:
-    hp, hp_increase, attack1 = juggernaut()
+    hp, hp_increase, action1, action2, action3, user_choice = juggernaut()
 
 else:
     print("Not an option")
@@ -51,39 +62,19 @@ while level < 10:
     monster_hp = 35
 
     while (hp > 0) and (monster_hp > 0):
-        if player_class == 1:
-            action = input("Type A1 or A2 to attack or D to dodge: ")
-            if action == "A1":
-                player_damage = random.randint(attack1)
-            elif action == "A2":
-                player_damage = random.randint(attack2)
-
-
-        elif player_class == 2:
-            action = input("Type A1, A2, or A3 to attack or D to dodge: ")
-            if action == "A1":
-                player_damage = random.randint(attack1)
-            elif action == "A2":
-                player_damage = random.randint(attack2)
-            elif action == "A3":
-                player_damage = random.randint(attack3)
-
-        elif player_class == 3:
-            action = input("Type A1 to attack or D to dodge: ")
-            if action == "A1":
-                player_damage = random.randint(attack1)
+        action = user_choice
 
         chance = random.random()
         monster_damage = random.randint(2, 3)
         health_gain = random.randint(2, 5)
-        mosnter_dmg_taken = 0
+        monster_dmg_taken = 0
         player_dmg_taken = 0
 
         if action == "A1":
             if chance <=0.40:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
-                mosnter_dmg_taken += player_damage
+                monster_dmg_taken += player_damage
             elif chance < 0.85:
                 print("Miss!")
             elif chance < 0.95:
@@ -93,13 +84,13 @@ while level < 10:
             else:
                 print(f"CRITICAL HIT!! You dealt {player_damage * 2} damage.")
                 monster_hp -= (player_damage * 2)
-                mosnter_dmg_taken += (player_damage * 2)
+                monster_dmg_taken += (player_damage * 2)
 
         elif action == "A2":
             if chance <=0.35:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
-                mosnter_dmg_taken += player_damage
+                monster_dmg_taken += player_damage
             elif chance < 0.80:
                 print("Miss!")
             elif chance < 0.95:
@@ -109,13 +100,13 @@ while level < 10:
             else:
                 print(f"CRITICAL HIT!! You dealt {player_damage * 2} damage.")
                 monster_hp -= (player_damage * 2)
-                mosnter_dmg_taken += (player_damage * 2)
+                monster_dmg_taken += (player_damage * 2)
 
         elif action == "A3":
             if chance <=0.30:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
-                mosnter_dmg_taken += player_damage
+                monster_dmg_taken += player_damage
             elif chance < 0.85:
                 print("Miss!")
             elif chance < 0.975:
@@ -125,7 +116,7 @@ while level < 10:
             else:
                 print(f"CRITICAL HIT!! You dealt {player_damage * 2} damage.")
                 monster_hp -= (player_damage * 2)
-                mosnter_dmg_taken += (player_damage * 2)
+                monster_dmg_taken += (player_damage * 2)
 
         elif action == "D":
             if chance < 0.45:
@@ -144,16 +135,14 @@ while level < 10:
             print("Wrong input, you LOSE!")
             hp -= hp
         print("Your health:", hp)
-        print("Monster's HP:", monster_hp)
-
 
     if hp < 0:
         print('You lose!')
 
     elif monster_hp < 0:
         print ("Congrats you win!")
-        hp += player_dmg_taken + hp_increas
-        monster_hp += mosnter_dmg_taken + 10
+        hp += player_dmg_taken + hp_increase
+        monster_hp += monster_dmg_taken + 10
 
     con = input("Enter 'C' to continue, anything else to quit: ")
     
