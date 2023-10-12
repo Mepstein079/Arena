@@ -176,6 +176,7 @@ while level < 10:
 #gives the user its current hp, mana, and what turn it is of this level
         print(f"Your health: {hp}")
         print(f"Your mana: {mana}")
+        print(f"You've lost {player_dmg_taken} health so far")
         print(f"End of turn {turn}")
         turn += 1
 
