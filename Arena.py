@@ -80,7 +80,11 @@ level = 0
 while level < 10:
     print(f"You are on level {level + 1}")
     monster_hp = 35
+    temp_hp = 0
     turn = 1
+    monster_dmg_taken = 0
+    player_dmg_taken = 0
+    mana_used = 0
 
 #   makes sure it only runs while both entities are alive
     while (hp > 0) and (monster_hp > 0):
@@ -90,9 +94,6 @@ while level < 10:
         chance = random.random()
         monster_damage = random.randint(2, 3)
         health_gain = random.randint(2, 5)
-        monster_dmg_taken = 0
-        player_dmg_taken = 0
-        mana_used = 0
         print("---------------")
 
 #   makes sure the user makes the right option
@@ -120,6 +121,8 @@ while level < 10:
 
         elif action == "a2" and mana > 0:
             player_damage = random.randint(action2[0], action2[1])
+            mana -= cost
+            mana_used += cost
             if chance <=0.35:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
@@ -135,8 +138,7 @@ while level < 10:
                 print(f"CRITICAL HIT!! You dealt {player_damage * 2} damage.")
                 monster_hp -= (player_damage * 2)
                 monster_dmg_taken += (player_damage * 2)
-            mana -= cost
-            mana_used += cost
+            
         elif action == "a2" and mana <= 0:
             print("Not enough mana, wasted turn")
             if chance < 0.40:
