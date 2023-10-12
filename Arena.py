@@ -7,7 +7,6 @@ look into making monster classes
 look into switch cases to make the actions cleaner
 look into making the game or level up into a function I can call
 simply the actions and its mana usage if statement (line 129)
-
 """
 
 """Future Goals:
