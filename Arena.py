@@ -17,8 +17,9 @@ print("Welcome to the Arena!!")
 print("----------------------")
 
 # determines which class the player is
-player_class = int(input("To pick your class enter 1, 2, or 3\n"
-                         "1: Figher\n2: Wizard\n3: Juggernaut\n"))
+user_prompt = ("To pick your class enter 1, 2, or 3\n"
+                "1: Figher\n2: Wizard\n3: Juggernaut\n")
+player_class = int(input(user_prompt))
 
 
 def fighter():
@@ -29,10 +30,10 @@ def fighter():
     base_attack_double = base_attack * 2
     temp_hp = (3, 5)
     cost = 1
-    user_choice = ("Enter a1, a2, a3, or d to do the following:\n"
+    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
                    "a1: Attack\na2: Double Attack\na3: Gain temporary HP\n"
                    "d:  Dodge\n")
-    return hp, mana, hp_increase, base_attack, base_attack_double, temp_hp, cost, user_choice
+    return hp, mana, hp_increase, base_attack, base_attack_double, temp_hp, cost, class_prompt
 
 
 def wizard():
@@ -43,9 +44,9 @@ def wizard():
     big_attack = (10, 14)
     recharge = (1, 3)
     cost = 1
-    user_choice = ("Enter a1, a2, a3, or d to do the following:\n"
+    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
                    "a1: Firebolt\na2: Fireball\na3: Regain Mana HP\nd:  Dodge\n")
-    return hp, mana, hp_increase, base_attack, big_attack, recharge, cost, user_choice
+    return hp, mana, hp_increase, base_attack, big_attack, recharge, cost, class_prompt
 
 
 def juggernaut():
@@ -56,23 +57,24 @@ def juggernaut():
     big_attack = (3, 4)
     heal = (4, 5)
     cost = 2
-    user_choice = ("Enter a1, a2, a3, or d to do the following:\n"
+    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
                    "a1: Punch\na2: Uppercut\na3: Heal\nd:  Dodge\n")
-    return hp, mana, hp_increase, base_attack, big_attack, heal, cost, user_choice
+    return hp, mana, hp_increase, base_attack, big_attack, heal, cost, class_prompt
+
 
 # based on the class choses, the variables are made global
 while player_class not in (1, 2, 3):
     print("Not an option")
     player_class = int(input("To pick your class enter 1, 2, or 3\n"
-                    "1: Figher\n2: Wizard\n3: Juggernaut\n"))
+                             "1: Figher\n2: Wizard\n3: Juggernaut\n"))
 if player_class == 1:
-    hp, mana, hp_increase, action1, action2, action3, cost, user_choice = fighter()
+    hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = fighter()
 
 elif player_class == 2:
-    hp, mana, hp_increase, action1, action2, action3, cost, user_choice = wizard()
+    hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = wizard()
 
 elif player_class == 3:
-    hp, mana, hp_increase, action1, action2, action3, cost, user_choice = juggernaut()
+    hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = juggernaut()
 
 
 con = None
@@ -91,7 +93,7 @@ while level < 10:
     while (hp > 0) and (monster_hp > 0):
         print("---------------")
 #       lists of variables to be used throughout the game
-        action = input(user_choice)
+        action = input(class_prompt)
         chance = random.random()
         monster_damage = random.randint(2, 3)
         health_gain = random.randint(2, 5)
@@ -100,11 +102,11 @@ while level < 10:
 #   makes sure the user makes the right option
         while action not in ("a1", "a2", "a3", "d"):
             print("Wrong input, try again")
-            action = input(user_choice)
+            action = input(class_prompt)
 #   outcomes based on the action selected, with different results depending on class selected
         if action == "a1":
             player_damage = random.randint(action1[0], action1[1])
-            if chance <=0.45:
+            if chance <= 0.45:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
                 monster_dmg_taken += player_damage
@@ -124,7 +126,7 @@ while level < 10:
             player_damage = random.randint(action2[0], action2[1])
             mana -= cost
             mana_used += cost
-            if chance <=0.35:
+            if chance <= 0.35:
                 print(f"HIT! You dealt {player_damage} damage.")
                 monster_hp -= player_damage
                 monster_dmg_taken += player_damage
@@ -139,7 +141,7 @@ while level < 10:
                 print(f"CRITICAL HIT!! You dealt {player_damage * 2} damage.")
                 monster_hp -= (player_damage * 2)
                 monster_dmg_taken += (player_damage * 2)
-            
+
         elif action == "a2" and mana <= 0:
             print("Not enough mana, wasted turn")
             if chance < 0.40:
