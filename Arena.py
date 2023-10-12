@@ -16,7 +16,7 @@ import random
 print("Welcome to the Arena!!")
 print("----------------------")
 
-
+# determines which class the player is
 player_class = int(input("To pick your class enter 1, 2, or 3\n"
                     "1: Figher\n2: Wizard\n3: Juggernaut\n"))
 
@@ -59,7 +59,11 @@ def juggernaut():
                    "a1: Punch\na2: Uppercut\na3: Heal\nd:  Dodge\n")
     return hp, mana, hp_increase, base_attack, big_attack, heal, cost, user_choice
 
-
+# based on the class choses, the variables are made global
+while player_class not in (1, 2, 3):
+    print("Not an option")
+    player_class = int(input("To pick your class enter 1, 2, or 3\n"
+                    "1: Figher\n2: Wizard\n3: Juggernaut\n"))
 if player_class == 1:
     hp, mana, hp_increase, action1, action2, action3, cost, user_choice = fighter()
 
@@ -69,18 +73,19 @@ elif player_class == 2:
 elif player_class == 3:
     hp, mana, hp_increase, action1, action2, action3, cost, user_choice = juggernaut()
 
-else:
-    print("Not an option")
+
 con = None
 level = 0
-
+# currently only 10 levels, once it breaks the 10th level game ends
 while level < 10:
     print(f"You are on level {level + 1}")
     monster_hp = 35
     turn = 1
 
+#   makes sure it only runs while both entities are alive
     while (hp > 0) and (monster_hp > 0):
         print("---------------")
+#       lists of variables to be used throughout the game
         action = input(user_choice)
         chance = random.random()
         monster_damage = random.randint(2, 3)
@@ -90,9 +95,11 @@ while level < 10:
         mana_used = 0
         print("---------------")
 
+#   makes sure the user makes the right option
         while action not in ("a1", "a2", "a3", "d"):
             print("Wrong input, try again")
             action = input(user_choice)
+#   outcomes based on the action selected, with different results depending on class selected
         if action == "a1":
             player_damage = random.randint(action1[0], action1[1])
             if chance <=0.45:
@@ -103,6 +110,7 @@ while level < 10:
                 print("Miss!")
             elif chance < 0.95:
                 print(f"The Monster countered, dealing {monster_damage} damage")
+                monster_damage -= temp_hp
                 hp -= monster_damage
                 player_dmg_taken += monster_damage
             else:
@@ -120,6 +128,7 @@ while level < 10:
                 print("Miss!")
             elif chance < 0.95:
                 print(f"The Monster countered, dealing {monster_damage} damage")
+                monster_damage -= temp_hp
                 hp -= monster_damage
                 player_dmg_taken += monster_damage
             else:
@@ -153,11 +162,18 @@ while level < 10:
             elif chance < 0.95:
                 print("Failed")
                 print(f"You took {monster_damage} damage")
-                hp -= random.randint(2, 3)
+                monster_damage -= temp_hp
+                hp -= monster_damage
+                player_dmg_taken += monster_damage
             else:
+                monster_damage = monster_damage * 2
                 print("CRIT!!!")
-                print(f"You took {monster_damage * 2} damage")
-                hp -= (monster_damage * 2)
+                print(f"You took {monster_damage} damage")
+                monster_damage -= temp_hp
+                hp -= (monster_damage)
+                player_dmg_taken += monster_damage
+
+#gives the user its current hp, mana, and what turn it is of this level
         print(f"Your health: {hp}")
         print(f"Your mana: {mana}")
         print(f"End of turn {turn}")
@@ -172,7 +188,7 @@ while level < 10:
         print("---------------")
         print ("Congrats you win!")
 
-
+# determining if the user is continuing or stopping the game
     con = input("Enter 'C' to continue, anything else to quit: ")
     con = con.capitalize()
     if con == "C":
