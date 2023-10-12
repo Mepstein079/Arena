@@ -1,7 +1,6 @@
 """To-do list:
 Re-organize so most code is not in an if statement
 rearange probabilities so user is rewarded for not only attack
-fix the wrong input you lose
 reorganize user-interface
 """
 
@@ -84,6 +83,10 @@ while level < 10:
         player_dmg_taken = 0
         mana_used = 0
         print("---------------")
+
+        while action not in ("a1", "a2", "a3", "d"):
+            print("Wrong input, try again")
+            action = input(user_choice)
         if action == "a1":
             player_damage = random.randint(action1[0], action1[1])
             if chance <=0.45:
@@ -119,6 +122,12 @@ while level < 10:
                 monster_dmg_taken += (player_damage * 2)
             mana -= cost
             mana_used += cost
+        elif action == "a2" and mana <= 0:
+            print("Not enough mana, wasted turn")
+            if chance < 0.40:
+                print(f"The monster took the opportunity to attack dealing {monster_damage}")
+                player_dmg_taken += monster_damage
+                hp -= monster_damage
 
         elif action == "a3":
             unique_ability = random.randint(action3[0], action3[1])
@@ -143,25 +152,23 @@ while level < 10:
                 print("CRIT!!!")
                 print(f"You took {monster_damage * 2} damage")
                 hp -= (monster_damage * 2)
-        else:
-            print("Wrong input, you LOSE!")
-            player_dmg_taken += hp
-            hp -= hp
         print(f"Your health: {hp}")
         print(f"Your mana: {mana}")
         print(f"End of turn {turn}")
-        print("---------------")
         turn += 1
 
 
     if hp <= 0:
+        print("---------------")
         print('You lose!')
 
     elif monster_hp <= 0:
+        print("---------------")
         print ("Congrats you win!")
 
 
     con = input("Enter 'C' to continue, anything else to quit: ")
+    con = con.capitalize()
     if con == "C":
         if hp <= 0:
             hp += player_dmg_taken
