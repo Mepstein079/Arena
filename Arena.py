@@ -1,7 +1,13 @@
 """To-do list:
 Re-organize so most code is not in an if statement
-rearange probabilities so user is rewarded for not only attack
-reorganize user-interface
+rearange probabilities so user is rewarded for dodging
+if abandoning dodging, increase to-hit chance, decrease miss chance, increase monster to-hit chance
+Buff or remove juggernaut, if removed find another class to replace it with
+"""
+
+"""Future Goals:
+Get this onto some type of website/browser so it can be played without needing access to this file
+Change it from text-based to 2d graphics
 """
 
 import random
