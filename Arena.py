@@ -3,6 +3,11 @@ Re-organize so most code is not in an if statement
 rearange probabilities so user is rewarded for dodging
 if abandoning dodging, increase to-hit chance, decrease miss chance, increase monster to-hit chance
 Buff or remove juggernaut, if removed find another class to replace it with
+look into making monster classes
+look into switch cases to make the actions cleaner
+look into making the game or level up into a function I can call
+simply the actions and its mana usage if statement (line 129)
+
 """
 
 """Future Goals:
