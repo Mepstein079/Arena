@@ -17,9 +17,8 @@ print("Welcome to the Arena!!")
 print("----------------------")
 
 # determines which class the player is
-user_prompt = ("To pick your class enter 1, 2, or 3\n"
-                "1: Figher\n2: Wizard\n3: Juggernaut\n")
-player_class = int(input(user_prompt))
+player_class = int(input("To pick your class enter 1, 2, or 3\n"
+                         "1: Figher\n2: Wizard\n3: Juggernaut\n"))
 
 
 def fighter():
