@@ -1,12 +1,9 @@
 """To-do list:
-Re-organize so most code is not in an if statement
-Theory craft to make a third calss
+put all the classes in a diff file to import here as a module
 look into making enemy classes
     fix juggernaut to fit an enemy class
     make a witch (idea is making it hard to hit her and she does big dmg (low chance tt hit for balance))
-    think of another
 look into switch cases to make the actions cleaner
-simplify the actions and its mana usage if statement (line 129)
 """
 
 """Future Goals:
@@ -21,18 +18,18 @@ print("Welcome to the Arena!!")
 print("----------------------")
 
 # determines which class the player is
-player_class = int(input("To pick your class enter 1, 2, or 3\n"
-                         "1: Figher\n2: Wizard\n"))
+player_class = int(input("To pick your class enter 1, 2\n"
+                         "1: Fighter\n2: Wizard\n"))
 while player_class not in (1, 2):
     print("Not an option. Try Again")
     player_class = int(input())
 
-opponent_class = int(input("To pick your class enter 1, 2, or 3\n"
+"""opponent_class = int(input("To pick your class enter 1, 2\n"
                            "1: Juggernaut\n2: Witch\n"))
 while opponent_class not in (1, 2):
     print("Not an option. Try Again")
     opponent_class = int(input())
-
+"""
 # game loop function, to make the while loop look cleaner
 def game_loop(result, player_hp, monster_hp, dmg_taken1, dmg_taken2, hp_increase, mana, mana_used, level):
     con = input("Enter 'C' to continue, anything else to quit: ")
@@ -66,7 +63,7 @@ def fighter():
     base_attack_double = base_attack * 2
     temp_hp = (3, 5)
     cost = 1
-    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
+    class_prompt = ("Enter a1, a2, or a3 to do the following:\n"
                    "a1: Attack\na2: Double Attack\na3: Gain temporary HP\n")
     return hp, mana, hp_increase, base_attack, base_attack_double, temp_hp, cost, class_prompt
 
@@ -79,8 +76,8 @@ def wizard():
     big_attack = (10, 14)
     recharge = (1, 3)
     cost = 1
-    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
-                   "a1: Firebolt\na2: Fireball\na3: Regain Mana HP\n")
+    class_prompt = ("Enter a1, a2, or a3 to do the following:\n"
+                   "a1: Firebolt\na2: Fireball\na3: Regain Mana\n")
     return hp, mana, hp_increase, base_attack, big_attack, recharge, cost, class_prompt
 
 # Possiblle enemies the user could face
@@ -92,7 +89,7 @@ def juggernaut():
     big_attack = (3, 4)
     heal = (4, 5)
     cost = 2
-    class_prompt = ("Enter a1, a2, a3, or d to do the following:\n"
+    class_prompt = ("Enter a1, a2, or a3 to do the following:\n"
                    "a1: Punch\na2: Uppercut\na3: Heal\n")
     return hp, mana, hp_increase, base_attack, big_attack, heal, cost, class_prompt
 
@@ -100,9 +97,9 @@ def juggernaut():
 
 
 # based on the class choses, the variables are made global
-while player_class not in (1, 2, 3):
+while player_class not in (1, 2):
     print("Not an option")
-    player_class = int(input("To pick your class enter 1, 2, or 3\n"
+    player_class = int(input("To pick your class enter 1, 2\n"
                              "1: Figher\n2: Wizard\n3: Juggernaut\n"))
 if player_class == 1:
     hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = fighter()
@@ -110,14 +107,12 @@ if player_class == 1:
 elif player_class == 2:
     hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = wizard()
 
-elif player_class == 3:
-    hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = juggernaut()
-
 
 con = None
 level = 1
 print(f"You are on level {level}")
 monster_hp = 35
+max_monster_hp = monster_hp
 temp_hp = 0
 turn = 1
 monster_dmg_taken = 0
@@ -192,12 +187,11 @@ while (hp > 0) and (monster_hp > 0):
         elif player_class == 2:
             mana += unique_ability
             mana_used -= unique_ability
-        elif player_class == 3:
-            hp += unique_ability
 
 # gives the user its current hp, mana, and what turn it is of this level
     print(f"Your health: {hp}/{max_hp}")
     print(f"Your mana: {mana}")
+    print(f"Monster's health: {monster_hp}/{max_monster_hp}")
     print(f"End of turn {turn}")
     turn += 1
 
@@ -217,4 +211,5 @@ while (hp > 0) and (monster_hp > 0):
         if level <= 10:
             print(f"Entering Level {level}")
         max_hp = hp
+        max_monster_hp = monster_hp
         turn = 0
