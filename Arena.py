@@ -49,7 +49,6 @@ elif player_class == 2:
     hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = classes.wizard()
 
 
-
 # variables to be used in while loop
 enemy_class = random.randint(0,1)
 
@@ -140,7 +139,6 @@ while level < 11:
                     print(f"The monster took the opportunity to attack dealing {counter_dmg}")
                     player_dmg_taken += counter_dmg
                     hp -= counter_dmg
-            
 
         elif action == "a3":
             unique_ability = random.randint(action3[0], action3[1])
