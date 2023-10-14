@@ -31,11 +31,17 @@ def wizard():
 # Possiblle enemies the user could face
 def juggernaut():
     hp = 30
-    mana = 6
-    hp_increase = 3
+    hp_increase = 10
     base_attack = (2, 3)
     big_attack = (3, 4)
-    heal = (4, 5)
-    cost = 2
-    return hp, mana, hp_increase, base_attack, big_attack, heal, cost
+    heal = (8, 12)
+    return hp, hp_increase, base_attack, big_attack, heal
+
+def witch():
+    hp = 15
+    hp_increase = 5
+    base_attack = (4, 6)
+    big_attack = (6, 8)
+    heal = (5, 8)
+    return hp, hp_increase, base_attack, big_attack, heal
 
