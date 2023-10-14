@@ -1,4 +1,5 @@
 """To-do list:
+Add a way to switch between enemies in each level
 look into switch cases to make the actions cleaner (in python called match)
 """
 
@@ -62,11 +63,11 @@ if enemy_class == 1:
 con = None
 level = 1
 max_enemy_hp = enemy_hp
-temp_hp = 0
-turn = 1
 enemy_dmg_taken = 0
 player_dmg_taken = 0
+temp_hp = 0
 mana_used = 0
+turn = 1
 max_hp = hp
 print(f"You are on level {level}")
 
@@ -149,7 +150,7 @@ while level < 11:
                 mana_used -= unique_ability
 
         if enemy_hp > 0:
-            if action_chance < 33:
+            if action_chance < 50:
                 enemy_damage = random.randint(enemy_base_attack[0], enemy_base_attack[1])
                 if to_hit < 45:
                     print(f"The {enemy_class_name} attacked you, dealing {enemy_damage} damage.")
@@ -172,7 +173,7 @@ while level < 11:
                         temp_hp -= enemy_damage
                 else:
                     print(f"The {enemy_class_name} missed their attack")
-            elif action_chance < 66:
+            elif action_chance < 85:
                 enemy_damage = random.randint(enemy_big_attack[0], enemy_big_attack[1])
                 if to_hit < 45:
                     print(f"The {enemy_class_name} attacked you, dealing {enemy_damage} damage.")
@@ -199,8 +200,10 @@ while level < 11:
                 heal = random.randint(unique[0], unique[1])
                 print(f"{enemy_class_name} healed for {heal} hp")
                 enemy_hp += heal
+                enemy_dmg_taken -= heal
                 if enemy_hp > max_enemy_hp:
                     enemy_hp = max_enemy_hp
+                    enemy_dmg_taken = 0
 
 
     # gives the user its current hp, mana, and what turn it is of this level
@@ -213,13 +216,25 @@ while level < 11:
         turn += 1
 
         if hp <= 0:
+            player_dmg_taken = max_hp
+            hp = 0
+            enemy_hp = 0
+            enemy_dmg_taken = max_enemy_hp
             print("---------------")
             print('You lose!')
-            hp, enemy_hp, mana, level = game_loop("success", hp, enemy_hp, player_dmg_taken, enemy_dmg_taken,
+            hp, enemy_hp, mana, level = game_loop("failure", hp, enemy_hp, player_dmg_taken, enemy_dmg_taken,
                                                     hp_increase, enemy_hp_increase, mana, mana_used, level)
+            enemy_dmg_taken = 0
+            player_dmg_taken = 0
+            temp_hp = 0
+            mana_used = 0
             turn = 0
             
         if enemy_hp <= 0:
+            enemy_hp = 0
+            enemy_dmg_taken = max_enemy_hp
+            hp = 0
+            player_dmg_taken = max_hp
             print("---------------")
             print("Congrats you win!")
             hp, enemy_hp, mana, level = game_loop("success", hp, enemy_hp, player_dmg_taken, enemy_dmg_taken,
@@ -228,4 +243,8 @@ while level < 11:
                 print(f"Entering Level {level}")
             max_hp = hp
             max_enemy_hp = enemy_hp
+            enemy_dmg_taken = 0
+            player_dmg_taken = 0
+            temp_hp = 0
+            mana_used = 0
             turn = 0
