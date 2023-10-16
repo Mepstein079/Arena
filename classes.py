@@ -8,11 +8,11 @@ def fighter():
     hp_increase = 2
     base_attack = (3, 6)
     base_attack_double = base_attack * 2
-    temp_hp = (3, 5)
+    heal = (3, 5)
     cost = 1
     class_prompt = ("Enter a1, a2, or a3 to do the following:\n"
-                   "a1: Attack\na2: Double Attack\na3: Gain temporary HP\n")
-    return hp, mana, hp_increase, base_attack, base_attack_double, temp_hp, cost, class_prompt
+                   "a1: Attack\na2: Double Attack\na3: Regain HP\n")
+    return hp, mana, hp_increase, base_attack, base_attack_double, heal, cost, class_prompt
 
 
 def wizard():
