@@ -9,10 +9,12 @@ Get this onto some type of application
 Change it from text-based to 2d graphics
 """
 
+
 import random
 import classes
 
 
+# prepares the game with each class's stats
 def preamble():
     player_class, enemy_class = picking_classes()
     # based on the class choses, the variables are made global
@@ -31,6 +33,8 @@ def preamble():
     return (player_class, max_hp, mana, hp_increase, action1, action2, action3, cost, class_prompt, max_enemy_hp,
             enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique, enemy_name)
 
+
+# the actions for the game
 def game_actions(class_prompt):
     action = input(class_prompt)
     while action not in ("a1", "a2", "a3"):
@@ -76,6 +80,7 @@ def picking_classes():
     return player_class, enemy_class
 
 
+# runs the player's turn
 def players_action(player_class, action, to_hit, counter_dmg, action1, action2, action3, enemy_name, hp, enemy_hp, mana, cost):
     if action == "a1":
         dmg = random.randint(action1[0], action1[1])
@@ -104,6 +109,7 @@ def players_action(player_class, action, to_hit, counter_dmg, action1, action2, 
     return hp, enemy_hp, mana
 
 
+# runs the enemies turn
 def enemies_action(enemy_name, to_hit, action_chance, action1, action2, action3, hp):
     if action_chance < 50:
         action_outcome = random.randint(action1[0], action1[1])
@@ -122,6 +128,7 @@ def enemies_action(enemy_name, to_hit, action_chance, action1, action2, action3,
     return hp
 
 
+# runs the game
 def run_game():
     print("Welcome to the Arena!!")
     print("----------------------")
@@ -171,4 +178,6 @@ def run_game():
             hp = max_hp
             enemy_hp = max_enemy_hp
 
+
+#executes
 run_game()
