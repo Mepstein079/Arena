@@ -47,26 +47,6 @@ def game_actions(class_prompt):
     return action, to_hit, action_chance, counter_dmg
 
 
-# game loop function, to make the while loop look cleaner
-def game_loop(result, max_hp, enemy_max_hp, hp_increase, enemy_increase, mana, mana_used, level):
-    con = input("Enter 'C' to continue, anything else to quit: ")
-    con = con.capitalize()
-    if con != "C":
-        print("Play again soon :)")
-        level = 11
-        return player_hp, enemy_hp, mana, level
-    if result == "failure":
-        player_hp = max_hp
-        enemy_hp = enemy_max_hp
-        mana += mana_used
-    elif result == "success":
-        player_hp = max_hp + hp_increase
-        enemy_hp = enemy_max_hp + enemy_increase
-        mana += mana_used
-        level += 1
-    return player_hp, enemy_hp, mana, level
-
-
 # runs to pick the players class and what the oponenent they will face
 def picking_classes():
     # determines which class the player is
@@ -126,6 +106,26 @@ def enemies_action(enemy_name, to_hit, action_chance, action1, action2, action3,
     else:
         print(f"The {enemy_name} missed their attack")
     return hp
+
+
+# game loop function, to make the while loop look cleaner
+def game_loop(result, max_hp, enemy_max_hp, hp_increase, enemy_increase, mana, mana_used, level):
+    con = input("Enter 'C' to continue, anything else to quit: ")
+    con = con.capitalize()
+    if con != "C":
+        print("Play again soon :)")
+        level = 11
+        return player_hp, enemy_hp, mana, level
+    if result == "failure":
+        player_hp = max_hp
+        enemy_hp = enemy_max_hp
+        mana += mana_used
+    elif result == "success":
+        player_hp = max_hp + hp_increase
+        enemy_hp = enemy_max_hp + enemy_increase
+        mana += mana_used
+        level += 1
+    return player_hp, enemy_hp, mana, level
 
 
 # runs the game
