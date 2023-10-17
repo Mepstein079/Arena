@@ -1,7 +1,6 @@
 """To-do list:
 Add a way to switch between enemies in each level
 look into switch cases to make the actions cleaner (in python called match)
-fix structure
 """
 
 """Future Goals:
