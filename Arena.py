@@ -1,6 +1,7 @@
 """To-do list:
 Add a way to switch between enemies in each level
 look into switch cases to make the actions cleaner (in python called match)
+Make namedtuples to clean up the amount of variables returned/called
 """
 
 """Future Goals:
@@ -147,7 +148,7 @@ def run_game():
         enemy_hp = max_enemy_hp
         hp = max_hp
         mana = max_mana
-        
+
 
     # players turn if they have > 0 hp
         while (hp > 0) and (enemy_hp > 0):
@@ -164,7 +165,7 @@ def run_game():
             print(f"End of turn {turn}")
             turn += 1
 
-# If the user loses then it restarts the level
+    # If the user loses then it restarts the level
         if hp <= 0:
             print("---------------")
             print('You lose!')
@@ -176,7 +177,7 @@ def run_game():
                 hp = max_hp
                 enemy_hp = max_enemy_hp
 
-# If the user wins then the program goes to the next level
+    # If the user wins then the program goes to the next level
         if enemy_hp <= 0:
             print("---------------")
             print("Congrats you win!")
