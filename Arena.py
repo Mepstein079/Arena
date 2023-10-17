@@ -5,8 +5,10 @@ Make namedtuples to clean up the amount of variables returned/called
 """
 
 """Future Goals:
-Get this onto some type of application
 Change it from text-based to 2d graphics
+learn flask
+throw it on pythonanywhere
+Get this onto some type of application
 """
 
 
