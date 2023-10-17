@@ -139,6 +139,8 @@ def run_game():
     level = 1
     print(f"You are on level {level}")
 
+
+# the con == C is to make sure the program ends without an error
     while level < 11 and con == "C":
         mana_used = 0
         turn = 1
@@ -157,12 +159,12 @@ def run_game():
 
             # gives the user its current hp, mana, and what turn it is of this level
             print(f"Your health: {hp}/{max_hp}")
-            print(f"Your mana: {mana}")
+            print(f"Your mana: {mana}/{max_mana}")
             print(f"{enemy_name}'s health: {enemy_hp}/{max_enemy_hp}")
             print(f"End of turn {turn}")
             turn += 1
 
-
+# If the user loses then it restarts the level
         if hp <= 0:
             print("---------------")
             print('You lose!')
@@ -173,7 +175,8 @@ def run_game():
                                                               hp_increase, enemy_hp_increase, mana, mana_used, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
-                
+
+# If the user wins then the program goes to the next level
         if enemy_hp <= 0:
             print("---------------")
             print("Congrats you win!")
