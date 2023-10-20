@@ -1,5 +1,5 @@
 """Both Player and Enemy classes to be imported."""
-
+from collections import namedtuple
 
 # possible classes the user could play
 def fighter():
@@ -44,4 +44,3 @@ def witch():
     big_attack = (6, 8)
     heal = (5, 8)
     return hp, hp_increase, base_attack, big_attack, heal
-
