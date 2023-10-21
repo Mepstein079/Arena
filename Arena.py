@@ -179,7 +179,7 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop("failure", player, enemy, level)
+                max_hp, max_enemy_hp, mana, level = game_loop("failure", max_hp, player, max_enemy_hp, enemy, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
 
