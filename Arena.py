@@ -1,5 +1,4 @@
 """To-do list:
-Make namedtuples to clean up the amount of variables returned/called
 Add a way to switch between enemies in each level
 look into switch cases to make the actions cleaner (in python called match)
 """
