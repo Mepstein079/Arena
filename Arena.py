@@ -138,8 +138,6 @@ def enemies_action(to_hit, action_chance, enemy, hp, enemy_hp):
 # game loop function, to make the while loop look cleaner
 def game_loop(player, enemy, level, result=None):
     if result == "success":
-        enemy = preamble_enemy()
-        print(f"You are now facing the {enemy.name}")
         level += 1
     player_hp = player.max_hp + (player.hp_increase * level)
     enemy_hp = enemy.max_hp + (enemy.hp_increase * level)
@@ -155,12 +153,13 @@ def run_game():
     enemy = preamble_enemy()
     con = "C"
     level = 0
-    print(f"You are on level {level + 1}")
     max_enemy_hp = enemy.max_hp
     enemy_hp = max_enemy_hp
     max_hp = player.max_hp
     hp = max_hp
     mana = player.mana
+    print(f"You are on level {level + 1}")
+    print(f"You are facing the {enemy.name}")
 
 
 # the con == C is to make sure the program ends without an error
@@ -199,11 +198,13 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
+                enemy = preamble_enemy()
                 max_hp, max_enemy_hp, mana, level = game_loop(player, enemy, level, "success")
                 hp = max_hp
                 enemy_hp = max_enemy_hp
-                print(f"Entering Level {level + 1}")
                 print("---------------")
+                print(f"Entering Level {level + 1}")
+                print(f"You are now facing the {enemy.name}")
 
 
     if level < 10:
