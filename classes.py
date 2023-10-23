@@ -4,9 +4,9 @@ from collections import namedtuple
 # possible classes the user could play
 def fighter():
     hp = 18
-    mana = 4
+    mana = 6
     hp_increase = 2
-    base_attack = (3, 6)
+    base_attack = (4, 7)
     base_attack_double = base_attack * 2
     heal = (3, 5)
     cost = 1

@@ -16,10 +16,9 @@ import classes
 from collections import namedtuple
 
 # prepares the game with each class's stats
-def preamble():
-    player_class, enemy_class = picking_classes()
+def preamble_player():
+    player_class = picking_user_class()
     user_class = namedtuple("name", ["max_hp", "mana", "hp_increase", "action1", "action2", "action3", "cost", "class_prompt"])
-    opponent_class = namedtuple("name", ["name", "max_hp", "hp_increase", "action1", "action2", "unique"])
     # based on the class choses, the variables are made global
     if player_class == "1":
         max_hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = classes.fighter()
@@ -28,14 +27,19 @@ def preamble():
     elif player_class == "2":
         max_hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = classes.wizard()
         user = user_class(max_hp, mana, hp_increase, action1, action2, action3, cost, class_prompt)
+    return player_class, user
 
+
+def preamble_enemy():
+    enemy_class = picking_enemy_class()
+    opponent_class = namedtuple("name", ["name", "max_hp", "hp_increase", "action1", "action2", "unique"])
     if enemy_class == 0:
         max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique = classes.juggernaut()
         opponent = opponent_class("Juggernaut", max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique)
     elif enemy_class == 1:
         max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique = classes.witch()
         opponent = opponent_class("Witch", max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique)
-    return player_class, user, opponent
+    return opponent
 
 
 # the actions for the game
@@ -53,7 +57,7 @@ def game_actions(class_prompt):
 
 
 # runs to pick the players class and what the oponenent they will face
-def picking_classes():
+def picking_user_class():
     # determines which class the player is
     player_class = input("To pick your class enter 1, 2\n"
                         "1: Fighter\n2: Wizard\n")
@@ -61,9 +65,13 @@ def picking_classes():
         print("Not an option. Try Again")
         player_class = input()
 
-    enemy_class = random.randint(0,1)
+    return player_class
 
-    return player_class, enemy_class
+
+
+def picking_enemy_class():
+    enemy_class = random.randint(0,1)
+    return enemy_class
 
 
 # runs the player's turn
@@ -96,9 +104,11 @@ def players_action(player_class, player, enemy, action, to_hit, counter_dmg, hp,
             hp -= counter_dmg
     elif action == "a3":
         if player_class == "1":
-            hp += random.randint(player.action3[0], player.action3[1])
+            print(f"You regained {unique} health.")
+            hp += unique
         elif player_class == "2":
-            mana += random.randint(player.action3[0], player.action3[1])
+            print(f"You regained {unique} mana.")
+            mana += unique
     return hp, enemy_hp, mana
 
 
@@ -126,16 +136,14 @@ def enemies_action(to_hit, action_chance, enemy, hp, enemy_hp):
 
 
 # game loop function, to make the while loop look cleaner
-def game_loop(result, player_max, hp_increase, enemy_max, enemy_increase, mana, level):
-    if result == "failure":
-        player_hp = player_max
-        enemy_hp = enemy_max
-        mana = mana
-    elif result == "success":
-        player_hp = player_max + hp_increase
-        enemy_hp = enemy_max + enemy_increase
-        mana = mana
+def game_loop(player, enemy, level, result=None):
+    if result == "success":
+        enemy = preamble_enemy()
+        print(f"You are now facing the {enemy.name}")
         level += 1
+    player_hp = player.max_hp + (player.hp_increase * level)
+    enemy_hp = enemy.max_hp + (enemy.hp_increase * level)
+    mana = player.mana
     return player_hp, enemy_hp, mana, level
 
 
@@ -143,10 +151,11 @@ def game_loop(result, player_max, hp_increase, enemy_max, enemy_increase, mana, 
 def run_game():
     print("Welcome to the Arena!!")
     print("----------------------")
-    player_class, player, enemy = preamble()
+    player_class, player = preamble_player()
+    enemy = preamble_enemy()
     con = "C"
-    level = 1
-    print(f"You are on level {level}")
+    level = 0
+    print(f"You are on level {level + 1}")
     max_enemy_hp = enemy.max_hp
     enemy_hp = max_enemy_hp
     max_hp = player.max_hp
@@ -155,7 +164,7 @@ def run_game():
 
 
 # the con == C is to make sure the program ends without an error
-    while level < 11 and con == "C":
+    while level < 10 and con == "C":
         turn = 1
 
     # players turn if they have > 0 hp
@@ -179,7 +188,7 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop("failure", max_hp, player.hp_increase, max_enemy_hp, enemy.hp_increase, player.mana, level)
+                max_hp, max_enemy_hp, mana, level = game_loop(player,enemy, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
 
@@ -190,16 +199,16 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop("success", max_hp, player.hp_increase, max_enemy_hp, enemy.hp_increase, player.mana, level)
+                max_hp, max_enemy_hp, mana, level = game_loop(player, enemy, level, "success")
                 hp = max_hp
                 enemy_hp = max_enemy_hp
-                print(f"Entering Level {level}")
+                print(f"Entering Level {level + 1}")
                 print("---------------")
 
 
     if level < 10:
         print("Thanks for playing :)")
-    if level > 10:
+    if level >= 10:
         print("Congratulations!!! You beat the Arena.")
         print("Thanks for playing :)")
 
