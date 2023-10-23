@@ -96,9 +96,9 @@ def players_action(player_class, player, enemy, action, to_hit, counter_dmg, hp,
             print(f"The {enemy.name} countered, dealing {counter_dmg} damage")
             hp -= counter_dmg
     elif action == "a3":
-        if player_class == 1:
+        if player_class == "1":
             hp += random.randint(player.action3[0], player.action3[1])
-        elif player_class == 2:
+        elif player_class == "2":
             mana += random.randint(player.action3[0], player.action3[1])
     return hp, enemy_hp, mana
 
