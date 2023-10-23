@@ -87,8 +87,9 @@ def players_action(player_class, player, enemy, action, to_hit, counter_dmg, hp,
             print(f"HIT! You dealt {dmg} damage.")
             enemy_hp -= dmg
         elif to_hit < 60:
-            print(f"CRITICAL HIT!! You dealt {dmg * 2} damage.")
-            enemy_hp -= (dmg * 2)
+            dmg = dmg * 2
+            print(f"CRITICAL HIT!! You dealt {dmg} damage.")
+            enemy_hp -= (dmg)
         elif to_hit < 90:
             print("Miss!")
         else:
@@ -110,6 +111,7 @@ def enemies_action(to_hit, action_chance, enemy, hp, enemy_hp):
         action_outcome = random.randint(enemy.action2[0], enemy.action2[1])
     else:
         action_outcome = random.randint(enemy.unique[0], enemy.unique[1])
+        print(f"The {enemy.name} healed for {action_outcome} damage.")
         enemy_hp += action_outcome
         return hp, enemy_hp
 
@@ -125,15 +127,15 @@ def enemies_action(to_hit, action_chance, enemy, hp, enemy_hp):
 
 
 # game loop function, to make the while loop look cleaner
-def game_loop(result, player_max, player, enemy_max, enemy, level):
+def game_loop(result, player_max, hp_increase, enemy_max, enemy_increase, mana, level):
     if result == "failure":
         player_hp = player_max
         enemy_hp = enemy_max
-        mana = player.mana
+        mana = mana
     elif result == "success":
-        player_hp = player_max + player.hp_increase
-        enemy_hp = enemy_max + enemy.hp_increase
-        mana = player.mana
+        player_hp = player_max + hp_increase
+        enemy_hp = enemy_max + enemy_increase
+        mana = mana
         level += 1
     return player_hp, enemy_hp, mana, level
 
@@ -146,17 +148,16 @@ def run_game():
     con = "C"
     level = 1
     print(f"You are on level {level}")
+    max_enemy_hp = enemy.max_hp
+    enemy_hp = max_enemy_hp
+    max_hp = player.max_hp
+    hp = max_hp
+    mana = player.mana
 
 
 # the con == C is to make sure the program ends without an error
     while level < 11 and con == "C":
         turn = 1
-        max_enemy_hp = enemy.max_hp
-        enemy_hp = max_enemy_hp
-        max_hp = player.max_hp
-        hp = max_hp
-        mana = player.mana
-
 
     # players turn if they have > 0 hp
         while (hp > 0) and (enemy_hp > 0):
@@ -166,9 +167,9 @@ def run_game():
             if enemy_hp > 0 and hp > 0:
                 hp, enemy_hp = enemies_action(to_hit2, action_chance, enemy, hp, enemy_hp)
             # gives the user its current hp, mana, and what turn it is of this level
-            print(f"Your health: {hp}/{player.max_hp}")
+            print(f"Your health: {hp}/{max_hp}")
             print(f"Your mana: {mana}/{player.mana}")
-            print(f"{enemy.name}'s health: {enemy_hp}/{enemy.max_hp}")
+            print(f"{enemy.name}'s health: {enemy_hp}/{max_enemy_hp}")
             print(f"End of turn {turn}")
             turn += 1
 
@@ -179,7 +180,7 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop("failure", max_hp, player, max_enemy_hp, enemy, level)
+                max_hp, max_enemy_hp, mana, level = game_loop("failure", max_hp, player.hp_increase, max_enemy_hp, enemy.hp_increase, player.mana, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
 
@@ -190,7 +191,7 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop("success", max_hp, player, max_enemy_hp, enemy, level)
+                max_hp, max_enemy_hp, mana, level = game_loop("success", max_hp, player.hp_increase, max_enemy_hp, enemy.hp_increase, player.mana, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
                 print(f"Entering Level {level}")
