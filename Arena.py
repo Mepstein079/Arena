@@ -1,18 +1,15 @@
 """To-do list:
-Add a way to switch between enemies in each level
-look into switch cases to make the actions cleaner (in python called match)
+Change it from text-based to 2d graphics
 """
 
 """Future Goals:
-Change it from text-based to 2d graphics
 learn flask
 throw it on pythonanywhere
 Get this onto some type of application
 """
 
 
-import random
-import classes
+import random, classes
 from collections import namedtuple
 
 # prepares the game with each class's stats

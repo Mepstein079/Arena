@@ -1,11 +1,10 @@
 """Both Player and Enemy classes to be imported."""
-from collections import namedtuple
 
 # possible classes the user could play
 def fighter():
     hp = 18
     mana = 6
-    hp_increase = 2
+    hp_increase = 4
     base_attack = (4, 7)
     base_attack_double = base_attack * 2
     heal = (3, 5)
@@ -17,7 +16,7 @@ def fighter():
 
 def wizard():
     hp = 11
-    hp_increase = 1
+    hp_increase = 2
     mana = 3
     base_attack = (6, 9)
     big_attack = (10, 14)
