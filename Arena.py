@@ -1,21 +1,21 @@
 """To-do list:
 Change it from text-based to 2d graphics
-"""
-
-"""Future Goals:
+---------------------
+Future Goals:
 learn flask
 throw it on pythonanywhere
 Get this onto some type of application
 """
-
-
-import random, classes
 from collections import namedtuple
+import random
+import classes
+
 
 # prepares the game with each class's stats
 def preamble_player():
     player_class = picking_user_class()
-    user_class = namedtuple("name", ["max_hp", "mana", "hp_increase", "action1", "action2", "action3", "cost", "class_prompt"])
+    user_class = namedtuple("name", ["max_hp", "mana", "hp_increase",
+                            "action1", "action2", "action3", "cost", "class_prompt"])
     # based on the class choses, the variables are made global
     if player_class == "1":
         max_hp, mana, hp_increase, action1, action2, action3, cost, class_prompt = classes.fighter()
@@ -29,13 +29,16 @@ def preamble_player():
 
 def preamble_enemy():
     enemy_class = picking_enemy_class()
-    opponent_class = namedtuple("name", ["name", "max_hp", "hp_increase", "action1", "action2", "unique"])
+    opponent_class = namedtuple(
+        "name", ["name", "max_hp", "hp_increase", "action1", "action2", "unique"])
     if enemy_class == 0:
         max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique = classes.juggernaut()
-        opponent = opponent_class("Juggernaut", max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique)
+        opponent = opponent_class("Juggernaut", max_enemy_hp, enemy_hp_increase,
+                                  enemy_base_attack, enemy_big_attack, unique)
     elif enemy_class == 1:
         max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique = classes.witch()
-        opponent = opponent_class("Witch", max_enemy_hp, enemy_hp_increase, enemy_base_attack, enemy_big_attack, unique)
+        opponent = opponent_class("Witch", max_enemy_hp, enemy_hp_increase,
+                                  enemy_base_attack, enemy_big_attack, unique)
     return opponent
 
 
@@ -43,8 +46,8 @@ def preamble_enemy():
 def game_actions(class_prompt):
     action = input(class_prompt)
     while action not in ("a1", "a2", "a3"):
-            print("Wrong input, try again")
-            action = input(class_prompt)
+        print("Wrong input, try again")
+        action = input(class_prompt)
     to_hit = random.randrange(0, 100)
     to_hit2 = random.randrange(0, 100)
     action_chance = random.randrange(0, 100)
@@ -53,11 +56,11 @@ def game_actions(class_prompt):
     return action, to_hit, to_hit2, action_chance, counter_dmg
 
 
-# runs to pick the players class and what the oponenent they will face
+# runs to pick the players class and what the opponent they will face
 def picking_user_class():
     # determines which class the player is
     player_class = input("To pick your class enter 1, 2\n"
-                        "1: Fighter\n2: Wizard\n")
+                         "1: Fighter\n2: Wizard\n")
     while player_class not in ("1", "2"):
         print("Not an option. Try Again")
         player_class = input()
@@ -65,9 +68,8 @@ def picking_user_class():
     return player_class
 
 
-
 def picking_enemy_class():
-    enemy_class = random.randint(0,1)
+    enemy_class = random.randint(0, 1)
     return enemy_class
 
 
@@ -82,7 +84,7 @@ def players_action(player_class, player, enemy, action, to_hit, counter_dmg, hp,
             if to_hit < 0.40:
                 print(f"The monster took the opportunity to attack dealing {counter_dmg}")
                 hp -= counter_dmg
-            return hp, enemy_hp, mana 
+            return hp, enemy_hp, mana
         mana -= player.cost
     elif action == "a3":
         unique = random.randint(player.action3[0], player.action3[1])
@@ -167,7 +169,8 @@ def run_game():
         while (hp > 0) and (enemy_hp > 0):
             print("---------------")
             action, to_hit, to_hit2, action_chance, counter_dmg = game_actions(player.class_prompt)
-            hp, enemy_hp, mana = players_action(player_class, player, enemy, action, to_hit, counter_dmg, hp, enemy_hp, mana)
+            hp, enemy_hp, mana = players_action(
+                player_class, player, enemy, action, to_hit, counter_dmg, hp, enemy_hp, mana)
             if enemy_hp > 0 and hp > 0:
                 hp, enemy_hp = enemies_action(to_hit2, action_chance, enemy, hp, enemy_hp)
             # gives the user its current hp, mana, and what turn it is of this level
@@ -184,7 +187,7 @@ def run_game():
             con = input("Enter 'C' to continue, anything else to quit: ")
             con = con.capitalize()
             if con == "C":
-                max_hp, max_enemy_hp, mana, level = game_loop(player,enemy, level)
+                max_hp, max_enemy_hp, mana, level = game_loop(player, enemy, level)
                 hp = max_hp
                 enemy_hp = max_enemy_hp
 
@@ -202,7 +205,6 @@ def run_game():
                 print("---------------")
                 print(f"Entering Level {level + 1}")
                 print(f"You are now facing the {enemy.name}")
-
 
     if level < 10:
         print("Thanks for playing :)")
